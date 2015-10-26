@@ -62,7 +62,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="15dp"
                 android:id="@+id/spacer"></LinearLayout>
 
             <Button
@@ -73,6 +73,22 @@
                 android:id="@+id/login"
                 android:textSize="20dp"
                 android:background="#FFD8D8D8" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/linearLayout2" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log In with Rdio"
+                android:id="@+id/rdiologin"
+                android:textSize="20dp"
+                android:background="#FF000000"
+                android:textColor="#FFFFFFFF" />
 
         </LinearLayout>
 
