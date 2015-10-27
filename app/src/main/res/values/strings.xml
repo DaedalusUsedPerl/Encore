@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Encore</string>
     <string name="title_activity_login">Encore</string>
+    <string name="title_activity_main_lobby">Main Lobby</string>
+    <string name="title_activity_findorcreatelobby">findorcreatelobby</string>
+    <string name="private_lobby_toggle">View private lobbies</string>
+    <string name="create_new_lobby">Create new lobby</string>
+    <string name="email">Email Address</string>
+    <string name="pass">Password</string>
+    <string name="login">Log In</string>
+    <string name="loginrdio">Log In with Rdio</string>
 </resources>
