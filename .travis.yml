@@ -1,7 +1,7 @@
 language: ruby
 rvm:
-  -2.1.7
+  - 2.1.7
   
 script:
- -cd encore_backend && rake
+ - cd encore_backend && rake
  
