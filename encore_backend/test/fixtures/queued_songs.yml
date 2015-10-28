@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lobby_id: 
+  position: 1
+  vote_count: 1
+
+two:
+  lobby_id: 
+  position: 1
+  vote_count: 1

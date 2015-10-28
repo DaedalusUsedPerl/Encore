@@ -7,4 +7,12 @@ class LobbyTest < ActiveSupport::TestCase
     lobby.reload
     assert_equal user, lobby.owner
   end
+
+  test "lobby has queued songs" do
+    lobby = Lobby.create! owner: User.first, name: "I like turtles"
+    qs1 = QueuedSong.create! lobby: lobby, position: 1, song: "Hello", vote_count: 9000
+    qs2 = QueuedSong.create! lobby: lobby, position: 2, song: "Good Bye", vote_count: 9000
+    lobby.reload
+    assert_equal [qs1, qs2], lobby.queued_songs
+  end
 end
