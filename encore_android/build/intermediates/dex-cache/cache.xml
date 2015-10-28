@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/connor/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/connor/src/Encore/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-dc06945243e1a0a41d7f38347fe84d5784f769bb.jar" />
+    </item>
+    <item
+        jar="/Users/connor/src/Encore/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/connor/src/Encore/app/build/intermediates/pre-dexed/debug/classes-79d092721007b1a1bc94e36c67746521c6bcc82a.jar" />
+    </item>
+    <item
+        jar="/Users/connor/src/Encore/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/connor/src/Encore/app/build/intermediates/pre-dexed/debug/classes-94b08d23ab328e441f20d3f539a31ae5e836ee13.jar" />
+    </item>
+    <item
+        jar="/Users/connor/src/Encore/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="/Users/connor/src/Encore/app/build/intermediates/pre-dexed/debug/classes-9699324b666722d229590a7ace9b90a13fed8751.jar" />
+    </item>
+    <item
+        jar="/Users/connor/src/Encore/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/connor/src/Encore/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-c6e93e72c1885d21a558406048d9bd9441991b57.jar" />
+    </item>
+
+</items>
