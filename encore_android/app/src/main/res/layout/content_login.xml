@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login"
                 android:id="@+id/login"
-                android:onClick="enterLobby"
+                android:onClick="login"
                 android:textSize="20sp"
                 android:background="#FFD8D8D8"
                 android:layout_marginBottom="50dp" />
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/loginrdio"
                 android:id="@+id/rdiologin"
-                android:onClick="enterLobby"
+                android:onClick="rdioLogin"
                 android:textSize="20sp"
                 android:background="#FF000000"
                 android:textColor="#FFFFFFFF" />
