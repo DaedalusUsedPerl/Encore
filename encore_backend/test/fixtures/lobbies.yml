@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  owner_id: 
+  name: Lobby1
+  owner: kim
 
 two:
-  name: MyString
-  owner_id: 
+  name: Lobby2
+  owner: bob
