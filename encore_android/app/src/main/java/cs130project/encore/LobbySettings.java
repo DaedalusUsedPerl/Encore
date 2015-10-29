@@ -1,11 +1,14 @@
 package cs130project.encore;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class LobbySettings extends AppCompatActivity {
 
@@ -15,9 +18,18 @@ public class LobbySettings extends AppCompatActivity {
         setContentView(R.layout.activity_lobby_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Lobby Settings");
+
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+        TextView nameView = (TextView)findViewById(R.id.logindisplay);
+        nameView.setText("Logged in as " + CurrentUser.getInstance().getName());
 
 
+    }
+
+    public void returnToMain(View view) {
+        Intent intent = new Intent(this, findorcreatelobby.class);
+        startActivity(intent);
     }
 
 }

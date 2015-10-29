@@ -20,6 +20,8 @@
     <string name="music_source">Music source:</string>
     <string name="Rdio">Rdio</string>
     <string name="mobile_source">Mobile</string>
+    <string name="show_private_lobbies">Show private lobbies?</string>
+    <string name="finish">Finish</string>
 
     <!-- Strings related to Settings -->
 

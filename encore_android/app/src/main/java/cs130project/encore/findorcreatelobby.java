@@ -17,12 +17,11 @@ public class findorcreatelobby extends AppCompatActivity {
         setContentView(R.layout.activity_findorcreatelobby);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        TextView nameView = (TextView)findViewById(R.id.nameView);
-        nameView.setText("Hello " + CurrentUser.getInstance().getName());
+        getSupportActionBar().setTitle("Available Lobbies");
+
     }
 
-    public void enterLobby(View view) {
+    public void enterLobbyMaker(View view) {
         Intent intent = new Intent(this, LobbySettings.class);
         startActivity(intent);
     }
