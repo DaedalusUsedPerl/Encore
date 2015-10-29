@@ -1,4 +1,3 @@
 Rails.application.routes.draw do
-  get 'lobbies' => 'lobbies#index'
-  post 'lobbies' => 'lobbies#create'
+  resources :lobbies, only: [:index, :create, :show]
 end
