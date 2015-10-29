@@ -23,4 +23,14 @@ class LobbiesControllerTest < ActionController::TestCase
     assert_equal owner.id, json["owner_id"]
     assert_equal "My Little Lobby", json["name"]
   end
+
+  test "show" do
+    lobby = Lobby.first
+    lobby.queued_songs.push(QueuedSong.create! song: "Youre Beautiful", position: 1, lobby: lobby)
+    get :show, id: lobby.id
+    assert_response :success
+
+    json = JSON.parse response.body
+    assert_equal "Youre Beautiful", json["queued_songs"][0]["song"]
+  end
 end

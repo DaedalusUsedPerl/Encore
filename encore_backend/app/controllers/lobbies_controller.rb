@@ -6,7 +6,7 @@ class LobbiesController < ApplicationController
   # Fetch all lobbies and return them as a JSON object
   # @TODO Use a more sane policy than returning all lobbies
   def index
-    render json: Lobby.all
+    render json: Lobby.all.as_json( only: [:id, :name, :owner_id] )
   end
 
   # POST /lobby
@@ -19,6 +19,14 @@ class LobbiesController < ApplicationController
     name = params[:name]
 
     lobby = Lobby.create! owner: owner, name: name
-    render json: lobby
+    render json: lobby.as_json( only: [:id, :name, :owner_id] )
+  end
+
+  def show
+    lobby = Lobby.find params[:id]
+    render json: lobby.as_json(
+               only: [:id, :name, :owner_id],
+               include: { queued_songs: {only: [:id, :song, :position, :vote_count]} }
+           )
   end
 end
