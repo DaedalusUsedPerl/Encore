@@ -1,5 +1,14 @@
 # Encore RoR backend
 
+## Installation and Running Instructions
+To run this code you must install Ruby 2.1.7 and Rails 4.2.4.  
+Once you have those installed run:
+* `bundle install`
+* `rake db:create db:migrate`
+* `rails server`
+The server will be running on localhost:300 and you can try out the API using curl or a web browser.
+
+## Description of API
 GET '/lobbies' — Returns a JSON list of all lobbies.  
   Example: `http GET localhost:3000/lobbies/` returns
   ```
