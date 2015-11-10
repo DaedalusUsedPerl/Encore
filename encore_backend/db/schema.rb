@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028063252) do
+ActiveRecord::Schema.define(version: 20151110062632) do
 
   create_table "lobbies", force: :cascade do |t|
     t.string   "name"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(version: 20151028063252) do
     t.integer  "lobby_id"
     t.integer  "position"
     t.integer  "vote_count"
-    t.string   "song"
+    t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "artist"
+    t.string   "rdio_id"
   end
 
   add_index "queued_songs", ["lobby_id", "position"], name: "index_queued_songs_on_lobby_id_and_position", unique: true

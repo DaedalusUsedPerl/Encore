@@ -2,16 +2,18 @@ class SongsController < ApplicationController
   before_action :load_lobby
 
   def index
-    render json: @lobby.queued_songs.to_json(only: [:id, :song, :position, :vote_count])
+    render json: @lobby.queued_songs.as_json
   end
 
   def create
     title = params[:title]
+    artist = params[:artist]
+    rdio_id = params[:rdio_id]
     position = @lobby.queued_songs.maximum(:position) + 1
-    song = QueuedSong.create song: title, position: position, vote_count: 1
-    puts song.inspect
+    song = QueuedSong.create title: title, artist: artist, position: position,
+                             vote_count: 1, rdio_id: rdio_id
     @lobby.queued_songs.push song
-    render json: song.to_json(only: [:id, :song, :position, :vote_count])
+    render json: song.as_json
   end
 
   def upvote

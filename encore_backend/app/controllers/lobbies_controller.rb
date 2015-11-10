@@ -26,7 +26,7 @@ class LobbiesController < ApplicationController
     lobby = Lobby.find params[:id]
     render json: lobby.as_json(
                only: [:id, :name, :owner_id],
-               include: { queued_songs: {only: [:id, :song, :position, :vote_count]} }
+               include: :queued_songs
            )
   rescue ActiveRecord::RecordNotFound => e
     head :not_found
