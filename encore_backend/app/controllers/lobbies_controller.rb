@@ -28,5 +28,7 @@ class LobbiesController < ApplicationController
                only: [:id, :name, :owner_id],
                include: { queued_songs: {only: [:id, :song, :position, :vote_count]} }
            )
+  rescue ActiveRecord::RecordNotFound => e
+    head :not_found
   end
 end
