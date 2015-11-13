@@ -1,7 +1,7 @@
 class LobbiesController < ApplicationController
   skip_before_filter :verify_authenticity_token # No way for our AJAX clients to grab this
 
-  # GET /lobby
+  # GET /lobbies
   #
   # Fetch all lobbies and return them as a JSON object
   # @TODO Use a more sane policy than returning all lobbies
@@ -9,7 +9,7 @@ class LobbiesController < ApplicationController
     render json: Lobby.all.as_json( only: [:id, :name] )
   end
 
-  # POST /lobby
+  # POST /lobbies
   #
   # Create a new lobby
   # Request must include a name and owner_id corresponding to the unique_id of the creator
