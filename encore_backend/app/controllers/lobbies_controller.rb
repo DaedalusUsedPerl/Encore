@@ -6,26 +6,26 @@ class LobbiesController < ApplicationController
   # Fetch all lobbies and return them as a JSON object
   # @TODO Use a more sane policy than returning all lobbies
   def index
-    render json: Lobby.all.as_json( only: [:id, :name, :owner_id] )
+    render json: Lobby.all.as_json( only: [:id, :name] )
   end
 
   # POST /lobby
   #
   # Create a new lobby
-  # Request must include a name and owner_id corresponding to the user_id of the creator
+  # Request must include a name and owner_id corresponding to the unique_id of the creator
   # @TODO Authenticate the user creating the lobby
   def create
-    owner = User.find params[:owner_id]
+    owner = User.find_or_create params[:owner_id]
     name = params[:name]
 
     lobby = Lobby.create! owner: owner, name: name
-    render json: lobby.as_json( only: [:id, :name, :owner_id] )
+    render json: lobby.as_json( only: [:id, :name] )
   end
 
   def show
     lobby = Lobby.find params[:id]
     render json: lobby.as_json(
-               only: [:id, :name, :owner_id],
+               only: [:id, :name],
                include: :queued_songs
            )
   rescue ActiveRecord::RecordNotFound => e

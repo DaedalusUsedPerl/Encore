@@ -2,6 +2,8 @@
 
 bob:
   name: Bob
+  unique_id: "randomlygenerated"
 
 kim:
   name: Kim
+  unique_id: "supercrazylongstring"

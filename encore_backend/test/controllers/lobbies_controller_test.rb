@@ -13,12 +13,11 @@ class LobbiesControllerTest < ActionController::TestCase
     owner = User.first
 
     assert_difference 'Lobby.count', 1 do
-      post :create, owner_id: owner.id, name: "My Little Lobby"
+      post :create, owner_id: owner.unique_id, name: "My Little Lobby"
     end
     assert_response :success
 
     json = JSON.parse response.body
-    assert_equal owner.id, json["owner_id"]
     assert_equal "My Little Lobby", json["name"]
   end
 

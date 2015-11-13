@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110062632) do
+ActiveRecord::Schema.define(version: 20151113025434) do
 
   create_table "lobbies", force: :cascade do |t|
     t.string   "name"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 20151110062632) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "unique_id"
   end
+
+  add_index "users", ["unique_id"], name: "index_users_on_unique_id", unique: true
 
 end
