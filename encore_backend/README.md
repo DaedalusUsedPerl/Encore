@@ -89,6 +89,10 @@ Request must include title, artist, and rdio_id of the song
   }
   ```
 
+DELETE '/lobbies/:lobby_id/songs/:id' — Deletes song with :id from lobby with id :lobby_id
+  Example: `http DELETE encoreapp.me/lobbies/298486374/songs/980190964` returns
+  HTTP 200 Success
+
 POST '/lobbies/:lobby_id/songs/:id/up' — Upvotes song with id :id
   Example: `http POST encoreapp.me/lobbies/298486374/songs/980190964/up` returns
   HTTP 200 Success

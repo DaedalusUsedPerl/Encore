@@ -3,8 +3,8 @@ require 'test_helper'
 class SongsControllerTest < ActionController::TestCase
   def setup
     @lobby = Lobby.create! name: "Hello"
-    QueuedSong.create! title: "Heartbeat", lobby_id: @lobby.id, position: 1, vote_count: 0
-    QueuedSong.create! title: "You See Me", lobby_id: @lobby.id, position: 2, vote_count: 5
+    @qs1 = QueuedSong.create! title: "Heartbeat", lobby_id: @lobby.id, position: 1, vote_count: 0
+    @qs2 = QueuedSong.create! title: "You See Me", lobby_id: @lobby.id, position: 2, vote_count: 5
     @lobby.reload
   end
 
@@ -27,6 +27,13 @@ class SongsControllerTest < ActionController::TestCase
     assert_equal "Hello", json["title"]
     assert_equal "Adele", json["artist"]
     assert_equal "123456", json["rdio_id"]
+  end
+
+  test "destroy" do
+    assert_difference "@lobby.queued_songs.count", -1 do
+      delete :destroy, lobby_id: @lobby.id, id: @qs1.id
+    end
+    assert_response :success
   end
 
   test "index without invalid lobby_id" do

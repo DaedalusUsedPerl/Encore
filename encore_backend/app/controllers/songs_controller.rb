@@ -16,6 +16,11 @@ class SongsController < ApplicationController
     render json: song.as_json
   end
 
+  def destroy
+    @lobby.queued_songs.find(params[:id]).destroy
+    head :ok
+  end
+
   def upvote
     @lobby.queued_songs.find(params[:id]).increment!(:vote_count, 1)
     head :ok
