@@ -23,7 +23,7 @@
         </activity>
         <activity android:name="com.rdio.android.sdk.activity.OAuth2WebViewActivity" />
         <activity
-            android:name=".findorcreatelobby"
+            android:name=".FindOrCreateLobby"
             android:label="@string/title_activity_findorcreatelobby"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

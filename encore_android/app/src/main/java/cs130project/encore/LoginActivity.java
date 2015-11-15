@@ -1,11 +1,6 @@
 package cs130project.encore;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -60,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements CurrentUserListe
     }
 
     public void enterLobby() {
-        Intent intent = new Intent(this, findorcreatelobby.class);
+        Intent intent = new Intent(this, FindOrCreateLobby.class);
         startActivity(intent);
     }
 }
