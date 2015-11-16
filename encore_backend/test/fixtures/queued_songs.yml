@@ -1,11 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  lobby_id: 
+  lobby: one
   position: 1
-  vote_count: 1
+  vote_count: 4
+  title: "Renegades"
+  artist: "X Ambassadors"
+  rdio_id: "t66130598"
 
 two:
-  lobby_id: 
+  lobby: one
+  position: 2
+  vote_count: 2
+  title: "Drunk on a Plane"
+  artist: "Dierks Bentley"
+  rdio_id: "t49280350"
+
+three:
+  lobby: two
   position: 1
   vote_count: 1
+  title: "Drunk on a Plane"
+  artist: "Dierks Bentley"
+  rdio_id: "t49280350"

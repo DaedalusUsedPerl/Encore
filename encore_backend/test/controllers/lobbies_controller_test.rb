@@ -23,12 +23,12 @@ class LobbiesControllerTest < ActionController::TestCase
 
   test "show" do
     lobby = Lobby.first
-    lobby.queued_songs.push(QueuedSong.create! title: "Youre Beautiful", position: 1, lobby: lobby)
+    lobby.queued_songs.push(QueuedSong.create! title: "Youre Beautiful", position: 3, lobby: lobby)
     get :show, id: lobby.id
     assert_response :success
 
     json = JSON.parse response.body
-    assert_equal "Youre Beautiful", json["queued_songs"][0]["title"]
+    assert_equal "Youre Beautiful", json["queued_songs"][1]["title"]
     assert_nil json["queued_songs"][0]["created_at"]
   end
 end
