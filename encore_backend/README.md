@@ -5,14 +5,34 @@ The backend API is deployed at `http://encoreapp.me`
 You may directly use this deployed API if you don't want to run the code yourself.
 
 If you want to run the code yourself, follow these instructions:
-First you must install Ruby 2.1.7 and Rails 4.2.4.
-* Follow instruction online for your system.
 
-Once you have those installed run:
+This tutorial was performed on a fresh copy of [Ubuntu 14.04.3 LTS 64-bit](http://releases.ubuntu.com/14.04.3/ubuntu-14.04.3-desktop-amd64.iso.torrent) running in VirtualBox.
+
+### First you must install Ruby 2.1.7 and Rails 4.2.4.
+* `gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3`
+* `\curl -sSL https://get.rvm.io | bash -s stable` to install rvm
+* `source /home/[your user name]/.rvm/scripts/rvm` or reopen shell window
+* `rvm install 2.1.7`
+* `rvm requirements`
+* `sudo apt-get install libgmp-dev`
+* `rvmsudo gem install rails --version 4.2.2`
+
+### Once you have those installed run:
+* `sudo apt-get install git`
+* `git clone https://github.com/DaedalusUsedPerl/Encore.git`
+* `cd Encore/encore_backend`
 * `bundle install`
+* `sudo apt-get install nodejs`
 * `rake db:create db:migrate`
+* `rake db:fixtures:load` to load example data into database
 * `rails server`
 The server will be running on localhost:3000 and you can try out the API using curl or a web browser.
+For example, http://localhost:3000/lobbies will return the list of lobbies. See below for full API description.
+
+### To run tests
+* `RAILS_ENV=test rake db:create db:migrate`
+* `rake test`
+Tests are located in the 'test' directory. Specifically, controller tests are in the 'test/controllers' folder and model tests are in the 'test/models` folder.
 
 ## Description of API
 GET '/lobbies' — Returns a JSON list of all lobbies.  
