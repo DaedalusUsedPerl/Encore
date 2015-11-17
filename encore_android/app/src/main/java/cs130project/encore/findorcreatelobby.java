@@ -28,12 +28,20 @@ public class FindOrCreateLobby extends AppCompatActivity {
      * Add a button to the ScrollView to allow the user to go to a lobby
      * @param o An object specifying the lobby
      */
-    private void addButtonForLobby(Object o){
+    private void addButtonForLobby(final Object o){
         final LinearLayout container = (LinearLayout)findViewById(R.id.findLobbiesButtonList);
         final Button newButton = new Button(this);
         newButton.setWidth(50);
         newButton.setHeight(20);
         newButton.setText("Test Button");
+        newButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //Load lobby associated with this button
+                Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
+                intent.putExtra("Lobby Name", o.toString());
+                startActivity(intent);
+            }
+        });
         container.post(new Runnable(){
             public void run(){
                 container.addView(newButton);

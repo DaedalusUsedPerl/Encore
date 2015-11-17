@@ -81,4 +81,5 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_lobby_settings">LobbySettings</string>
+    <string name="title_activity_lobby">LobbyActivity</string>
 </resources>
