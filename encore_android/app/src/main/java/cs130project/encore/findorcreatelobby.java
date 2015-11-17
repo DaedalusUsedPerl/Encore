@@ -9,10 +9,42 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class FindOrCreateLobby extends AppCompatActivity {
+
+    private static class LobbyData{
+        public String name;
+        public int id;
+    }
+
+    /**
+     * Add a button to the ScrollView to allow the user to go to a lobby
+     * @param o An object specifying the lobby
+     */
+    private void addButtonForLobby(final LobbyData data){
+        final ListView container = (ListView)findViewById(R.id.findLobbiesButtonList);
+        final Button newButton = new Button(this);
+        newButton.setWidth(50);
+        newButton.setHeight(20);
+        newButton.setText("Test Button");
+        newButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //Load lobby associated with this button
+                Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
+                intent.putExtra("Lobby Name", data.name);
+                intent.putExtra("Lobby ID", data.id);
+                startActivity(intent);
+            }
+        });
+        container.post(new Runnable(){
+            public void run(){
+                container.addView(newButton);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,31 +54,6 @@ public class FindOrCreateLobby extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Available Lobbies");
 
-    }
-
-    /**
-     * Add a button to the ScrollView to allow the user to go to a lobby
-     * @param o An object specifying the lobby
-     */
-    private void addButtonForLobby(final Object o){
-        final LinearLayout container = (LinearLayout)findViewById(R.id.findLobbiesButtonList);
-        final Button newButton = new Button(this);
-        newButton.setWidth(50);
-        newButton.setHeight(20);
-        newButton.setText("Test Button");
-        newButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                //Load lobby associated with this button
-                Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
-                intent.putExtra("Lobby Name", o.toString());
-                startActivity(intent);
-            }
-        });
-        container.post(new Runnable(){
-            public void run(){
-                container.addView(newButton);
-            }
-        });
     }
 
     public void enterLobbyMaker(View view) {
