@@ -6,7 +6,7 @@ class LobbiesControllerTest < ActionController::TestCase
     assert_response :success
 
     lobbies = JSON.parse response.body
-    assert_equal "Lobby2", lobbies[0]["name"]
+    assert_equal "Bob's Awesome Party Lobby", lobbies[0]["name"]
   end
 
   test "create" do
