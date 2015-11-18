@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.rdio.android.sdk.model.Track;
 
 public class LobbyActivity extends AppCompatActivity {
 
@@ -62,6 +63,27 @@ public class LobbyActivity extends AppCompatActivity {
         if(id != -1) {
             //Start the service to pull songs for the lobby
         }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LobbyActivity.this.onSearchRequested();
+            }
+        });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Track track = SearchActivity.getSelectedTrack();
+        SearchActivity.clearSelectedTrack();
+        if (track != null) {
+            addTrack(track);
+        }
+    }
+
+    public void addTrack(Track track) {
+        // TODO: add track to lobby via API
+    }
 }
