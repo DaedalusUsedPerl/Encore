@@ -2,16 +2,11 @@ package cs130project.encore;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class FindOrCreateLobby extends AppCompatActivity {
 
@@ -30,8 +25,8 @@ public class FindOrCreateLobby extends AppCompatActivity {
         newButton.setWidth(50);
         newButton.setHeight(20);
         newButton.setText("Test Button");
-        newButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        newButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 //Load lobby associated with this button
                 Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
                 intent.putExtra("Lobby Name", data.name);
@@ -39,8 +34,8 @@ public class FindOrCreateLobby extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        container.post(new Runnable(){
-            public void run(){
+        container.post(new Runnable() {
+            public void run() {
                 container.addView(newButton);
             }
         });
@@ -50,10 +45,18 @@ public class FindOrCreateLobby extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findorcreatelobby);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Available Lobbies");
 
+        findViewById(R.id.now_playing_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FindOrCreateLobby.this, NowPlayingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void enterLobbyMaker(View view) {

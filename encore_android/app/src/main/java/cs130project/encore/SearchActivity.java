@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rdio.android.core.RdioApiResponse;
 import com.rdio.android.core.RdioService_Api;
+import com.rdio.android.sdk.PlayRequest;
 import com.rdio.android.sdk.model.Track;
 
 import org.json.JSONException;

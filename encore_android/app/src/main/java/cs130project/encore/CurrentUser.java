@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.rdio.android.core.RdioApiResponse;
 import com.rdio.android.sdk.OAuth2Credential;
+import com.rdio.android.sdk.PlayRequest;
 import com.rdio.android.sdk.Rdio;
 import com.rdio.android.sdk.RdioListener;
 import com.rdio.android.sdk.RdioResponseListener;
@@ -18,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CurrentUser implements RdioListener {
 
@@ -29,6 +32,7 @@ public class CurrentUser implements RdioListener {
     private static CurrentUserListener listener;
 
     private String name;
+    private Lobby mHostingLobby = new Lobby();
 
     private Rdio rdio;
     private RdioService rdioService;
@@ -71,6 +75,14 @@ public class CurrentUser implements RdioListener {
 
     public String getName() {
         return name;
+    }
+
+    public Lobby getHostingLobby() {
+        return mHostingLobby;
+    }
+
+    public void setHostingLobby(Lobby lobby) {
+        mHostingLobby = lobby;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
