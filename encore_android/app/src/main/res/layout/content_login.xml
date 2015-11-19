@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/encorebgnoline"
+        android:background="@drawable/encorebackgroundnew2"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp">
 
@@ -21,50 +21,8 @@
             android:id="@+id/userpass"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
-            android:paddingTop="200dp">
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:id="@+id/Email"
-                android:hint="@string/email"
-                android:gravity="left|center"
-                android:background="#DDD8D8D8"
-                android:backgroundTint="#AAD8D8D8"
-                android:backgroundTintMode="screen"
-                android:paddingLeft="5dp"
-                android:textStyle="italic"
-                android:typeface="monospace"
-                android:layout_marginBottom="5dp" />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/Password"
-                android:hint="@string/pass"
-                android:gravity="left|center"
-                android:background="#DDD8D8D8"
-                android:backgroundTint="#AAD8D8D8"
-                android:backgroundTintMode="screen"
-                android:paddingLeft="5dp"
-                android:password="true"
-                android:textStyle="italic"
-                android:layout_marginBottom="15dp" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:id="@+id/login"
-                android:onClick="login"
-                android:textSize="20sp"
-                android:background="#FFD8D8D8"
-                android:layout_marginBottom="50dp" />
+            android:layout_marginTop="0dp"
+            android:paddingTop="165dp">
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -74,8 +32,9 @@
                 android:id="@+id/rdiologin"
                 android:onClick="rdioLogin"
                 android:textSize="20sp"
-                android:background="#FF000000"
-                android:textColor="#FFFFFFFF" />
+                android:background="#FF333333"
+                android:textColor="#FFFFFFFF"
+                android:layout_marginTop="0dp" />
 
         </LinearLayout>
 
