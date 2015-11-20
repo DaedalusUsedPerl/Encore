@@ -1,14 +1,10 @@
 package cs130project.encore;
 
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,7 +14,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rdio.android.core.RdioApiResponse;
 import com.rdio.android.core.RdioService_Api;
-import com.rdio.android.sdk.PlayRequest;
 import com.rdio.android.sdk.model.Track;
 
 import org.json.JSONException;
@@ -45,7 +40,7 @@ public class SearchActivity extends AppCompatActivity
         mListView = (ListView) findViewById(R.id.list_view);
         mListView.setOnItemClickListener(this);
 
-        View headerView = (View)getLayoutInflater().inflate(R.layout.search_header, mListView, false);
+        View headerView = (View)getLayoutInflater().inflate(R.layout.list_header, mListView, false);
         mHeaderTextView = (TextView) headerView.findViewById(R.id.text_view);
         mHeaderTextView.setText("Loading...");
         mListView.addHeaderView(headerView, null, false);

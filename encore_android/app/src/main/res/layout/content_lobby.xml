@@ -9,23 +9,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_lobby" tools:context="cs130project.encore.LobbyActivity">
 
-    <LinearLayout
+    <cs130project.encore.RefreshableListViewWrapper
+        android:id="@+id/refresh_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:scrollbars="vertical"
-                android:id="@+id/songVoteList">
-
-            </ListView>
-
-        </ScrollView>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>

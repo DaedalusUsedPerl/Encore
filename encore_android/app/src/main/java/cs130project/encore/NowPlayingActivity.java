@@ -1,5 +1,6 @@
 package cs130project.encore;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,11 +49,13 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerListe
         mArtistTextView = (TextView) findViewById(R.id.artist_text_view);
         mAlbumTextView = (TextView) findViewById(R.id.album_text_view);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.details_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NowPlayingActivity.this.onSearchRequested();
+                Intent intent = new Intent(NowPlayingActivity.this, LobbyActivity.class);
+                intent.putExtra("lobbyId", mLobby.getId());
+                startActivity(intent);
             }
         });
 
@@ -69,16 +72,8 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerListe
                 NowPlayingActivity.this.next();
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Track track = SearchActivity.getSelectedTrack();
-        SearchActivity.clearSelectedTrack();
-        if (track != null) {
-            mLobby.getQueue().add(new PlayRequest(track.key));
-        }
+        updateTrackDisplay();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,9 +92,9 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerListe
     }
 
     private void next() {
-        PlayRequest request = mLobby.getQueue().poll();
-        if (request != null) {
-            mPlayerManager.play(request);
+        Song song = mLobby.getQueue().poll();
+        if (song != null) {
+            mPlayerManager.play(song.getPlayRequest());
         } else {
             mPlayerManager.stop();
         }
@@ -132,15 +127,7 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerListe
     }
 
     public void onPlayStateChanged(PlayerListener.PlayState state) {
-        Track track = mPlayerManager.getCurrentTrack();
-        if (track != null) {
-            mTitleTextView.setText(track.name);
-            mArtistTextView.setText(track.artistName);
-            mAlbumTextView.setText(track.albumName);
-            mLoadImageViewTask.cancel(true);
-            mLoadImageViewTask = new LoadImageViewTask();
-            mLoadImageViewTask.execute(mImageView, track);
-        }
+        updateTrackDisplay();
     }
 
     public void onBufferingStarted() {
@@ -160,7 +147,19 @@ public class NowPlayingActivity extends AppCompatActivity implements PlayerListe
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Image
+    // Track
+
+    private void updateTrackDisplay() {
+        Track track = mPlayerManager.getCurrentTrack();
+        if (track != null) {
+            mTitleTextView.setText(track.name);
+            mArtistTextView.setText(track.artistName);
+            mAlbumTextView.setText(track.albumName);
+            mLoadImageViewTask.cancel(true);
+            mLoadImageViewTask = new LoadImageViewTask();
+            mLoadImageViewTask.execute(mImageView, track);
+        }
+    }
 
     private void clearImageView() {
         mLoadImageViewTask.cancel(true);

@@ -37,4 +37,5 @@ dependencies {
     compile 'com.google.oauth-client:google-oauth-client:1.18.0-rc'
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }

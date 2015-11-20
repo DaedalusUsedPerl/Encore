@@ -2,44 +2,33 @@ package cs130project.encore;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
-public class FindOrCreateLobby extends AppCompatActivity {
+import com.loopj.android.http.*;
 
-    private static class LobbyData{
-        public String name;
-        public int id;
-    }
+import org.json.JSONArray;
+import org.json.JSONException;
 
-    /**
-     * Add a button to the ScrollView to allow the user to go to a lobby
-     * @param o An object specifying the lobby
-     */
-    private void addButtonForLobby(final LobbyData data){
-        final ListView container = (ListView)findViewById(R.id.findLobbiesButtonList);
-        final Button newButton = new Button(this);
-        newButton.setWidth(50);
-        newButton.setHeight(20);
-        newButton.setText("Test Button");
-        newButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Load lobby associated with this button
-                Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
-                intent.putExtra("Lobby Name", data.name);
-                intent.putExtra("Lobby ID", data.id);
-                startActivity(intent);
-            }
-        });
-        container.post(new Runnable() {
-            public void run() {
-                container.addView(newButton);
-            }
-        });
-    }
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
+
+public class FindOrCreateLobby extends AppCompatActivity
+        implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+
+    private ArrayList<Lobby> mLobbies = new ArrayList<Lobby>();
+
+    private TextView mHeaderTextView;
+    private RefreshableListViewWrapper mRefreshWrapper;
+    private LobbyAdapter mListAdapter;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +46,72 @@ public class FindOrCreateLobby extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mRefreshWrapper = (RefreshableListViewWrapper) findViewById(R.id.refresh_wrapper);
+        mRefreshWrapper.setOnRefreshListener(this);
+        mRefreshWrapper.getListView().setOnItemClickListener(this);
+
+        View headerView = (View)getLayoutInflater().inflate(R.layout.list_header, mRefreshWrapper.getListView(), false);
+        mHeaderTextView = (TextView) headerView.findViewById(R.id.text_view);
+        mHeaderTextView.setText("Loading...");
+        mRefreshWrapper.getListView().addHeaderView(headerView, null, false);
+
+        mListAdapter = new LobbyAdapter(this, R.layout.lobby_item, mLobbies);
+        mRefreshWrapper.getListView().setAdapter(mListAdapter);
+
+        // Load data
+        mRefreshWrapper.setRefreshing(true);
+        onRefresh();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // List
+
+    @Override
+    public void onRefresh() {
+        Api.get("lobbies", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray lobbies) {
+                // header
+                mHeaderTextView.setText("No events");
+                if (lobbies.length() == 0) {
+                    mHeaderTextView.setVisibility(View.VISIBLE);
+                } else {
+                    mHeaderTextView.setVisibility(View.GONE);
+                }
+                // list
+                mListAdapter.clear();
+                for (int i = 0; i < lobbies.length(); i++) {
+                    try {
+                        mListAdapter.add(new Lobby(lobbies.getJSONObject(i)));
+                    } catch (JSONException e) {
+                    }
+                }
+                // refresh
+                mRefreshWrapper.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                mHeaderTextView.setVisibility(View.VISIBLE);
+                mHeaderTextView.setText("Error: " + responseString);
+                mRefreshWrapper.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int cellPosition, long id) {
+        final int position = cellPosition - 1;
+        final Lobby lobby = mLobbies.get(position);
+
+        Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
+        intent.putExtra("lobbyId", lobby.getId());
+        startActivity(intent);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // New Lobby
 
     public void enterLobbyMaker(View view) {
         Intent intent = new Intent(this, LobbySettings.class);
