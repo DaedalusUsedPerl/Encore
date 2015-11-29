@@ -10,7 +10,8 @@ class SongsController < ApplicationController
     title = params[:title]
     artist = params[:artist]
     rdio_id = params[:rdio_id]
-    position = @lobby.queued_songs.maximum(:position) + 1
+    position = 1
+    position = @lobby.queued_songs.maximum(:position) + 1 if @lobby.queued_songs.count > 0
     song = QueuedSong.create title: title, artist: artist, position: position,
                              vote_count: 1, rdio_id: rdio_id
     @lobby.queued_songs.push song
