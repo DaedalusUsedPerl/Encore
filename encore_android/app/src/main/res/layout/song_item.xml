@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="80dp"
+    >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center_vertical"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -30,33 +32,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="right"
+        android:gravity="right|center_vertical"
         >
         <TextView
             android:id="@+id/vote_count_text_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:text="0"
             android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="right"
+            android:gravity="right|center_vertical"
             >
-            <Button
+            <ImageButton
                 android:id="@+id/upvote_button"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
-                android:text="/\\"
+                android:src="@drawable/up"
+                android:scaleType="fitCenter"
+                android:background="@color/offWhite"
+                android:tint="@color/colorAccent"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/downvote_button"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
-                android:text="\\/"
+                android:src="@drawable/down"
+                android:scaleType="fitCenter"
+                android:background="@color/offWhite"
+                android:tint="@color/colorAccent"
+
                 />
         </LinearLayout>
     </LinearLayout>

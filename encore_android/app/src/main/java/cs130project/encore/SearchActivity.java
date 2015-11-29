@@ -16,6 +16,7 @@ import com.rdio.android.core.RdioApiResponse;
 import com.rdio.android.core.RdioService_Api;
 import com.rdio.android.sdk.model.Track;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,18 +73,16 @@ public class SearchActivity extends AppCompatActivity
             JSONObject result = response.getResult();
 
             mListAdapter.clear();
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<Track>>(){}.getType();
-            List<Track> list;
             try {
-                list = gson.fromJson(result.getJSONArray("results").toString(), listType);
-                mListAdapter.addAll(list);
+                JSONArray results = result.getJSONArray("results");
+                for (int i = 0; i < results.length(); i++) {
+                    mListAdapter.add(Track.extractTrack(results.getJSONObject(i)));
+                }
             } catch (JSONException e) {
-                list = null;
                 e.printStackTrace();
             }
 
-            if (list == null || list.size() == 0) {
+            if (mListAdapter.getCount() == 0) {
                 mHeaderTextView.setText("No results");
                 mHeaderTextView.setVisibility(View.VISIBLE);
             } else {

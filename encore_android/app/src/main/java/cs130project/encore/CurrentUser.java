@@ -32,7 +32,6 @@ public class CurrentUser implements RdioListener {
     private static CurrentUserListener listener;
 
     private String name;
-    private Lobby mHostingLobby = new Lobby();
 
     private Rdio rdio;
     private RdioService rdioService;
@@ -75,14 +74,6 @@ public class CurrentUser implements RdioListener {
 
     public String getName() {
         return name;
-    }
-
-    public Lobby getHostingLobby() {
-        return mHostingLobby;
-    }
-
-    public void setHostingLobby(Lobby lobby) {
-        mHostingLobby = lobby;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

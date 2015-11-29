@@ -11,7 +11,7 @@ import com.rdio.android.sdk.model.Track;
 
 import java.util.List;
 
-public class LobbyAdapter extends ArrayAdapter {
+public class LobbyAdapter extends ArrayAdapter<Lobby> {
 
     private int mResourceId;
     private LayoutInflater inflater;

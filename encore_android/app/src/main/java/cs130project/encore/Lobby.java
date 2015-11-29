@@ -1,5 +1,8 @@
 package cs130project.encore;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.rdio.android.sdk.PlayRequest;
 
 import org.json.JSONArray;
@@ -13,8 +16,12 @@ public class Lobby {
     private String mId;
     private String mName;
     private Queue<Song> mQueue = new LinkedList<Song>();
+    private boolean mIsHost;
 
-    Lobby() {}
+    Lobby() {
+        // TODO: save isHost after new lobby creation flow
+        mIsHost = true;
+    }
 
     Lobby(JSONObject json) {
         try {
@@ -27,6 +34,7 @@ public class Lobby {
                     mQueue.add(new Song(song));
                 }
             }
+            mIsHost = getSharedPreferences().getBoolean(getIsHostKey(), false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -43,4 +51,27 @@ public class Lobby {
     public Queue<Song> getQueue() {
         return mQueue;
     }
+
+    public boolean getIsHost() {
+        return mIsHost;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Saved
+
+    private SharedPreferences getSharedPreferences() {
+        return App.getContext().getSharedPreferences("lobby", Context.MODE_PRIVATE);
+    }
+
+    private String getIsHostKey() {
+        return mId;
+    }
+
+    private void setIsHost(boolean isHost) {
+        mIsHost = isHost;
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putBoolean(getIsHostKey(), mIsHost);
+        editor.commit();
+    }
+
 }

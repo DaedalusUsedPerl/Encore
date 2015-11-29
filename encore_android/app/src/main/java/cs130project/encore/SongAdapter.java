@@ -1,6 +1,10 @@
 package cs130project.encore;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +13,25 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
-public class SongAdapter extends ArrayAdapter {
+public class SongAdapter extends ArrayAdapter<Song> {
 
     private int mResourceId;
     private LayoutInflater inflater;
     private Context context;
+    private Handler.Callback mVoteUpdatedCallback;
 
     public SongAdapter(Context ctx, int resourceId, List objects) {
         super(ctx, resourceId, objects);
         mResourceId = resourceId;
         inflater = LayoutInflater.from(ctx);
         context = ctx;
+        mVoteUpdatedCallback = new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message _) {
+                SongAdapter.this.notifyDataSetChanged();
+                return true;
+            }
+        };
     }
 
     @Override
@@ -44,9 +56,9 @@ public class SongAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 if (song.getCurrentUserVoteCount() == 1) {
-                    song.clearVote();
+                    song.clearVote(mVoteUpdatedCallback);
                 } else {
-                    song.voteUp();
+                    song.voteUp(mVoteUpdatedCallback);
                 }
                 updateVoteButtons(holder, song);
             }
@@ -55,9 +67,9 @@ public class SongAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 if (song.getCurrentUserVoteCount() == -1) {
-                    song.clearVote();
+                    song.clearVote(mVoteUpdatedCallback);
                 } else {
-                    song.voteDown();
+                    song.voteDown(mVoteUpdatedCallback);
                 }
                 updateVoteButtons(holder, song);
             }
@@ -72,11 +84,19 @@ public class SongAdapter extends ArrayAdapter {
         // TODO: style buttons
         switch (song.getCurrentUserVoteCount()) {
             case -1:
+                holder.getDownvoteButton().setImageTintMode(PorterDuff.Mode.SRC_ATOP);
+                holder.getUpvoteButton().setImageTintMode(PorterDuff.Mode.DST);
                 break;
             case 0:
+                holder.getDownvoteButton().setImageTintMode(PorterDuff.Mode.DST);
+                holder.getUpvoteButton().setImageTintMode(PorterDuff.Mode.DST);
                 break;
             case 1:
+                holder.getDownvoteButton().setImageTintMode(PorterDuff.Mode.DST);
+                holder.getUpvoteButton().setImageTintMode(PorterDuff.Mode.SRC_ATOP);
                 break;
         }
     }
+
+
 }

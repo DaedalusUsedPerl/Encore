@@ -1,7 +1,7 @@
 package cs130project.encore;
 
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class SongItemHolder {
@@ -10,8 +10,8 @@ public class SongItemHolder {
     private TextView mTitleTextView;
     private TextView mArtistTextView;
     private TextView mVoteCountTextView;
-    private Button mUpvoteButton;
-    private Button mDownvoteButton;
+    private ImageButton mUpvoteButton;
+    private ImageButton mDownvoteButton;
 
     public SongItemHolder(View view) {
         mView = view;
@@ -42,16 +42,16 @@ public class SongItemHolder {
         return mVoteCountTextView;
     }
 
-    public Button getUpvoteButton () {
+    public ImageButton getUpvoteButton () {
         if (mUpvoteButton == null) {
-            mUpvoteButton = (Button) mView.findViewById(R.id.upvote_button);
+            mUpvoteButton = (ImageButton) mView.findViewById(R.id.upvote_button);
         }
         return mUpvoteButton;
     }
 
-    public Button getDownvoteButton () {
+    public ImageButton getDownvoteButton () {
         if (mDownvoteButton == null) {
-            mDownvoteButton = (Button) mView.findViewById(R.id.downvote_button);
+            mDownvoteButton = (ImageButton) mView.findViewById(R.id.downvote_button);
         }
         return mDownvoteButton;
     }

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import com.rdio.android.sdk.model.Track;
 
-public class SearchAdapter extends ArrayAdapter {
+public class SearchAdapter extends ArrayAdapter<Track> {
 
     private int mResourceId;
     private LayoutInflater inflater;

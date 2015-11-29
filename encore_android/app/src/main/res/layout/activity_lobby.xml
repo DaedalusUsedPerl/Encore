@@ -18,16 +18,20 @@
     <include layout="@layout/content_lobby" />
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start" android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_input_add" />
+    <android.support.design.widget.FloatingActionButton android:id="@+id/pause_fab"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom" android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_media_pause" />
     <android.support.design.widget.FloatingActionButton android:id="@+id/play_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom" android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_media_play" />
+    <android.support.design.widget.FloatingActionButton android:id="@+id/next_fab"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_media_next" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -42,8 +42,7 @@ public class FindOrCreateLobby extends AppCompatActivity
         findViewById(R.id.now_playing_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FindOrCreateLobby.this, NowPlayingActivity.class);
-                startActivity(intent);
+                startLobbyActivity(LobbyPlayer.getInstance().getLobby());
             }
         });
 
@@ -62,6 +61,20 @@ public class FindOrCreateLobby extends AppCompatActivity
         // Load data
         mRefreshWrapper.setRefreshing(true);
         onRefresh();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        findViewById(R.id.now_playing_button).setVisibility(
+                LobbyPlayer.getInstance().getLobby() == null ? View.INVISIBLE : View.VISIBLE
+        );
+    }
+
+    private void startLobbyActivity(Lobby lobby) {
+        Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
+        intent.putExtra("lobbyId", lobby.getId());
+        startActivity(intent);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,10 +117,7 @@ public class FindOrCreateLobby extends AppCompatActivity
     public void onItemClick(AdapterView<?> parent, View view, int cellPosition, long id) {
         final int position = cellPosition - 1;
         final Lobby lobby = mLobbies.get(position);
-
-        Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
-        intent.putExtra("lobbyId", lobby.getId());
-        startActivity(intent);
+        startLobbyActivity(lobby);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
