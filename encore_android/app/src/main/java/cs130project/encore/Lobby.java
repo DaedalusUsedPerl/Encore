@@ -79,7 +79,7 @@ public class Lobby {
 
     @Override
     public boolean equals(Object o) {
-        return (o instanceof Lobby && getId().equals(((Lobby)o).getId()));
+        return (o != null && o instanceof Lobby && getId().equals(((Lobby)o).getId()));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
