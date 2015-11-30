@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Allow the user to find or create a loby
+ */
 public class FindOrCreateLobby extends AppCompatActivity
         implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 

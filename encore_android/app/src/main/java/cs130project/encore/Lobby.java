@@ -19,15 +19,20 @@ import java.util.Queue;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Struct class to hold information on a lobby.
+ */
 public class Lobby {
     private String mId;
     private String mName;
     private Queue<Song> mQueue = new LinkedList<Song>();
     private boolean mIsHost;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Object
-
+    /**
+     * Instantiate a lobby with a given name
+     * @param name The name of this lobby.
+     * @param callback A callback for notifying lobby instantiation or failure
+     */
     Lobby(String name, final Handler.Callback callback) {
         mName = name;
         mIsHost = true;
@@ -52,10 +57,18 @@ public class Lobby {
         });
     }
 
+    /**
+     * Instantiate a lobby from a JSON response from the backend
+     * @param json The JSON object holding this lobby's data
+     */
     Lobby(JSONObject json) {
         update(json);
     }
 
+    /**
+     * Update this lobby with information from the server
+     * @param json New information from the server to update this lobby with.
+     */
     public void update(JSONObject json) {
         try {
             mId = json.getString("id");

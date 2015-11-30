@@ -11,6 +11,9 @@ import com.rdio.android.sdk.PlayerManager;
 import com.rdio.android.sdk.Rdio;
 import com.rdio.android.sdk.model.Track;
 
+/**
+ * Implements the Rdio PlayerListener interface
+ */
 public class LobbyPlayer implements PlayerListener {
 
     private static LobbyPlayer mInstance;
@@ -53,6 +56,10 @@ public class LobbyPlayer implements PlayerListener {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Player
 
+    /**
+     * Is this player ready?
+     * @return true if the lobby pla
+     */
     public boolean isReady() {
         if (mLobby == null) {
             return false;
@@ -67,6 +74,10 @@ public class LobbyPlayer implements PlayerListener {
         }
     }
 
+    /**
+     * Is the player currently playing a song?
+     * @return True if playing a song, false otherwise
+     */
     public boolean isPlaying() {
         return mCurrentSong != null && mPlayerManager.getState() == PlayState.Playing || mPlayerManager.isPlaying();
     }
@@ -79,6 +90,9 @@ public class LobbyPlayer implements PlayerListener {
         return mCurrentSong == null ? null : mPlayerManager.getCurrentTrack();
     }
 
+    /**
+     * Toggle between playing and pausing
+     */
     public void playPause() {
         if (getCurrentTrack() == null) {
             next();
@@ -91,6 +105,9 @@ public class LobbyPlayer implements PlayerListener {
         }
     }
 
+    /**
+     * Mark the current song as played and go to the next song
+     */
     public void next() {
         if (mCurrentSong != null) {
             mCurrentSong.markPlayed();
