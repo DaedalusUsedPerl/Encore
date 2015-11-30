@@ -7,13 +7,13 @@
     tools:showIn="@layout/activity_findorcreatelobby"
     tools:context="cs130project.encore.FindOrCreateLobby"
     android:orientation="vertical"
-    android:background="@color/backgroundDark"
+    android:background="@color/backgroundLight"
     >
 
     <cs130project.encore.RefreshableListViewWrapper
         android:id="@+id/refresh_wrapper"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="508dp"
         android:paddingBottom="50dp"
         />
 
