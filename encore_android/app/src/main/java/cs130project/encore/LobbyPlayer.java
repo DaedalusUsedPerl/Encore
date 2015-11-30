@@ -9,6 +9,7 @@ import com.rdio.android.sdk.OAuth2Credential;
 import com.rdio.android.sdk.PlayerListener;
 import com.rdio.android.sdk.PlayerManager;
 import com.rdio.android.sdk.Rdio;
+import com.rdio.android.sdk.model.Track;
 
 public class LobbyPlayer implements PlayerListener {
 
@@ -74,25 +75,30 @@ public class LobbyPlayer implements PlayerListener {
         return mCurrentSong;
     }
 
+    public Track getCurrentTrack() {
+        return mCurrentSong == null ? null : mPlayerManager.getCurrentTrack();
+    }
+
     public void playPause() {
-        if (mPlayerManager.getCurrentTrack() != null) {
+        if (getCurrentTrack() == null) {
+            next();
+        } else {
             if (isPlaying()) {
                 mPlayerManager.pause();
             } else {
                 mPlayerManager.play();
             }
-        } else {
-            next();
         }
     }
 
     public void next() {
+        if (mCurrentSong != null) {
+            mCurrentSong.markPlayed();
+        }
+
         mCurrentSong = mLobby.getQueue().poll();
         if (mCurrentSong != null) {
             mPlayerManager.play(mCurrentSong.getPlayRequest());
-            mCurrentSong.markPlayed();
-        } else {
-            mPlayerManager.stop();
         }
     }
 

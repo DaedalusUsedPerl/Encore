@@ -2,6 +2,7 @@ package cs130project.encore;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.rdio.android.sdk.PlayRequest;
 
@@ -18,27 +19,48 @@ public class Lobby {
     private Queue<Song> mQueue = new LinkedList<Song>();
     private boolean mIsHost;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Object
+
     Lobby() {
         // TODO: save isHost after new lobby creation flow
         mIsHost = true;
     }
 
     Lobby(JSONObject json) {
+        update(json);
+    }
+
+    public void update(JSONObject json) {
         try {
             mId = json.getString("id");
             mName = json.getString("name");
             if (json.has("queued_songs")) {
+                mQueue.clear();
                 JSONArray songs = json.getJSONArray("queued_songs");
                 for (int i = 0; i < songs.length(); i++) {
-                    JSONObject song = songs.getJSONObject(i);
-                    mQueue.add(new Song(song));
+                    Song song = new Song(songs.getJSONObject(i));
+                    Song playingSong = LobbyPlayer.getInstance().getCurrentSong();
+                    if (playingSong == null || !song.equals(playingSong)) {
+                        mQueue.add(song);
+                    } else {
+                        Log.i("", "");
+                    }
                 }
             }
-            mIsHost = getSharedPreferences().getBoolean(getIsHostKey(), false);
+            mIsHost = true; // TODO: getSharedPreferences().getBoolean(getIsHostKey(), false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof Lobby && getId().equals(((Lobby)o).getId()));
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Accessors
 
     public String getId() {
         return mId;

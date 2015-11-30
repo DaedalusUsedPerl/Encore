@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.rdio.android.core.RdioApiResponse;
 import com.rdio.android.sdk.OAuth2Credential;
-import com.rdio.android.sdk.PlayRequest;
 import com.rdio.android.sdk.Rdio;
 import com.rdio.android.sdk.RdioListener;
 import com.rdio.android.sdk.RdioResponseListener;
@@ -19,8 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class CurrentUser implements RdioListener {
 
@@ -28,8 +25,8 @@ public class CurrentUser implements RdioListener {
     final private static String CLIENT_SECRET = "lpRVH8U3QJz0jNS4PC_UlQ";
     final private static String REDIRECT_URI = "https://github.com/DaedalusUsedPerl/Encore";
 
-    private static CurrentUser instance;
-    private static CurrentUserListener listener;
+    private static CurrentUser instance = null;
+    private static CurrentUserListener listener = null;
 
     private String name;
 

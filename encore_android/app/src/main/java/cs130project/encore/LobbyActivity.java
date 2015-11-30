@@ -7,6 +7,8 @@ import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -96,8 +98,7 @@ public class LobbyActivity extends AppCompatActivity
         mRefreshWrapper.getListView().addHeaderView(headerView, null, false);
 
         // Player
-        mPlayerManager = CurrentUser.getInstance().getRdio().getPlayerManager();
-        mPlayerManager.addPlayerListener(this);
+        CurrentUser.getInstance().getRdio().getPlayerManager().addPlayerListener(this);
         mLoadImageViewTask = new LoadImageViewTask();
 
         // Track details
@@ -118,6 +119,12 @@ public class LobbyActivity extends AppCompatActivity
                 LobbyActivity.this.playPause();
             }
         });
+        findViewById(R.id.pause_fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LobbyActivity.this.playPause();
+            }
+        });
         findViewById(R.id.next_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +135,17 @@ public class LobbyActivity extends AppCompatActivity
         // Load data
         mRefreshWrapper.setRefreshing(true);
         onRefresh();
+
+        // Auto-refresh
+        final Handler autoRefresh = new Handler();
+        final int autoRefreshDelay = 5000; // ms
+        autoRefresh.postDelayed(new Runnable() {
+            public void run() {
+                //do something
+                LobbyActivity.this.onRefresh();
+                autoRefresh.postDelayed(this, autoRefreshDelay);
+            }
+        }, autoRefreshDelay);
     }
 
     @Override
@@ -137,7 +155,20 @@ public class LobbyActivity extends AppCompatActivity
         Track track = SearchActivity.getSelectedTrack();
         if (track != null) {
             SearchActivity.clearSelectedTrack();
-            addSong(new Song(track, mLobby));
+            new Song(track, mLobby, new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message msg) {
+                    if (msg.what == 0) {
+                        // success
+                        mListAdapter.add((Song) msg.obj);
+                    } else {
+                        // failure
+                        mHeaderTextView.setVisibility(View.VISIBLE);
+                        mHeaderTextView.setText("Error adding song: " + msg.obj);
+                    }
+                    return true;
+                }
+            });
         }
         // Update
         updateViews();
@@ -145,7 +176,7 @@ public class LobbyActivity extends AppCompatActivity
 
     private void updateViews() {
         updateTrackDisplay();
-        updatePlayPauseVisibility();
+        updatePlayerVisibility();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,12 +189,16 @@ public class LobbyActivity extends AppCompatActivity
             Api.get("lobbies/" + id, null, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject lobby) {
-                    mLobby = new Lobby(lobby);
-                    setTitle(mLobby.getName());
+                    if (mLobby == null) {
+                        mLobby = new Lobby(lobby);
+                    } else {
+                        mLobby.update(lobby);
+                    }
                     // Info
+                    setTitle(mLobby.getName());
                     updateViews();
                     // header
-                    mHeaderTextView.setText("No songs");
+                    mHeaderTextView.setText("No more songs");
                     if (mLobby.getQueue().size() == 0) {
                         mHeaderTextView.setVisibility(View.VISIBLE);
                     } else {
@@ -172,6 +207,10 @@ public class LobbyActivity extends AppCompatActivity
                     // list
                     mListAdapter.clear();
                     mListAdapter.addAll(mLobby.getQueue());
+                    // player
+                    if (mLobby.getIsHost()) {
+
+                    }
                     // refresh
                     mRefreshWrapper.setRefreshing(false);
                 }
@@ -191,43 +230,44 @@ public class LobbyActivity extends AppCompatActivity
         }
     }
 
-    public void addSong(final Song song) {
-        RequestParams params = new RequestParams();
-        params.put("title", song.getTitle());
-        params.put("artist", song.getArtist());
-        params.put("rdio_id", song.getRdioId());
-        // TODO: not working (422)
-        Api.post("lobbies/" + mLobby.getId() + "/songs", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mListAdapter.add(song);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                mHeaderTextView.setVisibility(View.VISIBLE);
-                mHeaderTextView.setText("Error adding song: " + responseString);
-            }
-        });
-    }
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Player
 
-    private void updatePlayPauseVisibility() {
-        if (LobbyPlayer.getInstance().isPlaying()) {
-            findViewById(R.id.play_fab).setVisibility(View.INVISIBLE);
-            findViewById(R.id.pause_fab).setVisibility(View.VISIBLE);
+    private void updatePlayerVisibility() {
+        if (mLobby != null && mLobby.getIsHost()) {
+            // Host
+            if (mLobby.equals(LobbyPlayer.getInstance().getLobby())) {
+                // Current lobby
+                if (LobbyPlayer.getInstance().isPlaying()) {
+                    findViewById(R.id.play_fab).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.pause_fab).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.play_fab).setVisibility(View.VISIBLE);
+                    findViewById(R.id.pause_fab).setVisibility(View.INVISIBLE);
+                }
+                findViewById(R.id.next_fab).setVisibility(View.VISIBLE);
+            } else {
+                // Other lobby
+                findViewById(R.id.play_fab).setVisibility(View.VISIBLE);
+                findViewById(R.id.pause_fab).setVisibility(View.INVISIBLE);
+                findViewById(R.id.next_fab).setVisibility(View.INVISIBLE);
+            }
         } else {
-            findViewById(R.id.play_fab).setVisibility(View.VISIBLE);
+            // Not host
+            findViewById(R.id.play_fab).setVisibility(View.INVISIBLE);
             findViewById(R.id.pause_fab).setVisibility(View.INVISIBLE);
+            findViewById(R.id.next_fab).setVisibility(View.INVISIBLE);
         }
     }
 
     private void playPause() {
         // Set lobby if needed before playing
-        LobbyPlayer.getInstance().setLobby(mLobby);
-        LobbyPlayer.getInstance().playPause();
+        if (mLobby != null && mLobby.equals(LobbyPlayer.getInstance().getLobby())) {
+            LobbyPlayer.getInstance().playPause();
+        } else {
+            LobbyPlayer.getInstance().setLobby(mLobby);
+            LobbyPlayer.getInstance().next();
+        }
     }
 
     private void next() {
@@ -272,25 +312,33 @@ public class LobbyActivity extends AppCompatActivity
     // Track
 
     private void updateTrackDisplay() {
-        Track track = mPlayerManager.getCurrentTrack();
-        if (track == null && mLobby != null) {
+        Track track = LobbyPlayer.getInstance().getCurrentTrack();
+        if (mLobby == null) {
+            // loading
+            updateTrackDisplay(null);
+        } else if (track == null || !mLobby.equals(LobbyPlayer.getInstance().getLobby())) {
             Song song = mLobby.getQueue().peek();
-            if (song != null) {
-                song.getTrackAsync(new RdioService_Api.ResponseListener() {
+            if (song == null) {
+                // empty queue
+                updateTrackDisplay(null);
+            } else {
+                // show now playing (non-host)
+                song.getTrackAsync(new Handler.Callback() {
                     @Override
-                    public void onResponse(RdioApiResponse rdioApiResponse) {
-                        if (rdioApiResponse.isSuccess()) {
-                            JSONObject json = rdioApiResponse.getResult();
-                            updateTrackDisplay(Track.extractTrack(json));
-                        } else {
-                            updateTrackDisplayError(rdioApiResponse.getErrorMessage());
+                    public boolean handleMessage(Message msg) {
+                        if (msg.what == 0) { // success
+                            updateTrackDisplay((Track) msg.obj);
+                        } else { // failure
+                            updateTrackDisplayError((String) msg.obj);
                         }
+                        return true;
                     }
                 });
-                return;
             }
+        } else {
+            // show now playing (host)
+            updateTrackDisplay(track);
         }
-        updateTrackDisplay(track);
     }
 
     private void updateTrackDisplay(Track track) {
