@@ -1,5 +1,6 @@
 # Encore Bundle
 
-In order to run the Android component, first download the repository. Open the "encore_android" folder through Android Studio and build the resulting project.
+Download the APK here: https://dl.dropboxusercontent.com/u/55001004/app-debug.apk
 
-For the backend, follow the README instructions in the "encore_backend" folder.
+Either add the APK to local storage on a native device or download Genymotion: https://www.genymotion.com/
+With a Genymotion emulator, the APK can simply be dragged and dropped on top of an active emulator.
