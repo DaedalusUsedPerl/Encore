@@ -1,6 +1,7 @@
 package cs130project.encore;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,7 @@ public class FindOrCreateLobby extends AppCompatActivity
         View headerView = (View)getLayoutInflater().inflate(R.layout.list_header, mRefreshWrapper.getListView(), false);
         mHeaderTextView = (TextView) headerView.findViewById(R.id.text_view);
         mHeaderTextView.setText("Loading...");
+        mHeaderTextView.setTextColor(getResources().getColor(R.color.backgroundLight));
         mRefreshWrapper.getListView().addHeaderView(headerView, null, false);
 
         mListAdapter = new LobbyAdapter(this, R.layout.lobby_item, mLobbies);

@@ -19,10 +19,6 @@ public class LobbySettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Lobby Settings");
-
-        //getSupportActionBar().setDisplayShowTitleEnabled(false);
-        TextView nameView = (TextView)findViewById(R.id.edit_name);
-        nameView.setText("Logged in as " + CurrentUser.getInstance().getName());
     }
 
     public void saveLobby(View view) {

@@ -32,8 +32,8 @@
                 android:id="@+id/rdiologin"
                 android:onClick="rdioLogin"
                 android:textSize="20sp"
-                android:background="#FF333333"
-                android:textColor="#FFFFFFFF"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:layout_marginTop="0dp" />
 
         </LinearLayout>

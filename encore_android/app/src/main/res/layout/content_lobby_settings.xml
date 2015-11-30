@@ -6,7 +6,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_lobby_settings"
     tools:context="cs130project.encore.LobbySettings"
-    android:background="#FFCCCCCC">
+    android:background="@color/backgroundDark">
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/gen"
+            android:textColor="@color/backgroundLight"
             android:id="@+id/generalheader"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -36,7 +37,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#FFFFFFFF"
+            android:background="@color/backgroundLight"
             android:weightSum="1">
 
             <TextView
@@ -46,7 +47,7 @@
                 android:text="@string/lobby_name"
                 android:id="@+id/lobbyname"
                 android:textAlignment="center"
-                android:textColor="#FF000000"
+                android:textColor="@color/black"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp" />
 
@@ -71,6 +72,8 @@
             android:id="@+id/makelobby"
             android:onClick="saveLobby"
             android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

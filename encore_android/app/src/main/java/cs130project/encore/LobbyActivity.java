@@ -207,10 +207,6 @@ public class LobbyActivity extends AppCompatActivity
                     // list
                     mListAdapter.clear();
                     mListAdapter.addAll(mLobby.getQueue());
-                    // player
-                    if (mLobby.getIsHost()) {
-
-                    }
                     // refresh
                     mRefreshWrapper.setRefreshing(false);
                 }

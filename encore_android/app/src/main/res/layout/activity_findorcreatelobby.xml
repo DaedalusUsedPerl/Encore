@@ -11,7 +11,7 @@
 
         <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
             android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="#FF333333" app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:background="@color/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay">
             <Button
                 android:id="@+id/now_playing_button"
                 android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
                 android:background="@null"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:text="Now \nPlaying"/>
         </android.support.v7.widget.Toolbar>
 
