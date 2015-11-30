@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="cs130project.encore" >
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.rdio.android.sdk.activity.OAuth2WebViewActivity" />
+        <activity android:name="com.rdio.android.sdk.activity.OAuth2WebViewActivity"
+                    tools:replace='android:label'
+                    android:label="@string/rdio_login"/>
         <activity
             android:name=".FindOrCreateLobby"
             android:label="@string/title_activity_findorcreatelobby"

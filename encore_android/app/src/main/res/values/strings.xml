@@ -23,6 +23,7 @@
     <string name="show_private_lobbies">Show private lobbies?</string>
     <string name="finish">Finish</string>
     <string name='createlobby'>Create Lobby</string>
+    <string name='rdio_login'>Log in with Rdio</string>
 
     <!-- Strings related to Settings -->
 
