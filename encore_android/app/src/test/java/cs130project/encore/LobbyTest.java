@@ -16,25 +16,25 @@ public class LobbyTest {
     @Test
     public void testUpdate() throws Exception {
         String santaBaby = "{" +
-                "id: \"1\"," +
-                "title: \"Santa Baby\"," +
-                "artist: \"Eartha Kitt\"," +
-                "vote_count: 15," +
-                "lobby_id: \"1\"," +
-                "rdio_id: \"1\"," +
+                "\"id\": \"1\"," +
+                "\"title\": \"Santa Baby\"," +
+                "\"artist\": \"Eartha Kitt\"," +
+                "\"vote_count\": 15," +
+                "\"lobby_id\": \"1\"," +
+                "\"rdio_id\": \"1\"," +
                 "}";
         String beEvil = "{" +
-                "id: \"1\"," +
-                "title: \"I Want to be Evil\"," +
-                "artist: \"Eartha Kitt\"," +
-                "vote_count: 15," +
-                "lobby_id: \"1\"," +
-                "rdio_id: \"2\"," +
+                "\"id\": \"2\"," +
+                "\"title\": \"I Want to be Evil\"," +
+                "\"artist\": \"Eartha Kitt\"," +
+                "\"vote_count\": 15," +
+                "\"lobby_id\": \"1\"," +
+                "\"rdio_id\": \"2\"," +
                 "}";
         JSONObject lobbyJSON = new JSONObject("{" +
-                "id: \"1\"," +
-                "name: TestLobby," +
-                "queued_songs: [" + santaBaby + ", " + beEvil +  "]" +
+                "\"id\": \"1\"," +
+                "\"name\": TestLobby," +
+                "\"queued_songs\": [" + santaBaby + ", " + beEvil +  "]" +
                 "}");
         Lobby l = new Lobby(lobbyJSON);//Constructor calls the update function
         assertTrue(l.getId() == "1");
