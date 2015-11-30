@@ -21,6 +21,8 @@ import cz.msebera.android.httpclient.Header;
 public class FindOrCreateLobby extends AppCompatActivity
         implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
+    static final int NEW_LOBBY_REQUEST_CODE = 1;
+
     private ArrayList<Lobby> mLobbies = new ArrayList<Lobby>();
 
     private TextView mHeaderTextView;
@@ -69,11 +71,16 @@ public class FindOrCreateLobby extends AppCompatActivity
         findViewById(R.id.now_playing_button).setVisibility(
                 LobbyPlayer.getInstance().getLobby() == null ? View.INVISIBLE : View.VISIBLE
         );
+        onRefresh();
     }
 
     private void startLobbyActivity(Lobby lobby) {
+        startLobbyActivity(lobby.getId());
+    }
+
+    private void startLobbyActivity(String lobbyId) {
         Intent intent = new Intent(FindOrCreateLobby.this, LobbyActivity.class);
-        intent.putExtra("lobbyId", lobby.getId());
+        intent.putExtra("lobbyId", lobbyId);
         startActivity(intent);
     }
 
@@ -125,7 +132,14 @@ public class FindOrCreateLobby extends AppCompatActivity
 
     public void enterLobbyMaker(View view) {
         Intent intent = new Intent(this, LobbySettings.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == NEW_LOBBY_REQUEST_CODE) {
+            startLobbyActivity(data.getStringExtra("lobbyId"));
+        }
+    }
 }

@@ -2,8 +2,12 @@ package cs130project.encore;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.rdio.android.sdk.PlayRequest;
 
 import org.json.JSONArray;
@@ -12,6 +16,8 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
+import cz.msebera.android.httpclient.Header;
 
 public class Lobby {
     private String mId;
@@ -22,9 +28,28 @@ public class Lobby {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Object
 
-    Lobby() {
-        // TODO: save isHost after new lobby creation flow
+    Lobby(String name, final Handler.Callback callback) {
+        mName = name;
         mIsHost = true;
+
+        RequestParams params = new RequestParams();
+        params.put("name", mName);
+        Api.post("lobbies", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    mId = response.getString("id");
+                    saveIsHost();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.handleMessage(Message.obtain(null, 0, Lobby.this));
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                callback.handleMessage(Message.obtain(null, -1, responseString));
+            }
+        });
     }
 
     Lobby(JSONObject json) {
@@ -43,12 +68,10 @@ public class Lobby {
                     Song playingSong = LobbyPlayer.getInstance().getCurrentSong();
                     if (playingSong == null || !song.equals(playingSong)) {
                         mQueue.add(song);
-                    } else {
-                        Log.i("", "");
                     }
                 }
             }
-            mIsHost = true; // TODO: getSharedPreferences().getBoolean(getIsHostKey(), false);
+            mIsHost = getSharedPreferences().getBoolean(getIsHostKey(), false);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -89,8 +112,7 @@ public class Lobby {
         return mId;
     }
 
-    private void setIsHost(boolean isHost) {
-        mIsHost = isHost;
+    private void saveIsHost() {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
         editor.putBoolean(getIsHostKey(), mIsHost);
         editor.commit();
