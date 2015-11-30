@@ -6,3 +6,5 @@ Either add the APK to local storage on a native Android device or download Genym
 With a Genymotion Android emulator, the APK can simply be dragged and dropped on top of an active emulator.
 
 More complicated: Otherwise, download the repository and open the encore_android folder with Android Studio. You will be prompted to install some plugins; install these and then try building. If there is an error stating that there is no class named "FindOrCreateLobby.java", rename the file under the "src" folder called "findorcreatelobby.java" with the former's capitalization. The resulting build will work on a native Android phone connected by USB to the computer or on an emulator (which is really slow for Android Studio).
+
+Tests: Tests are located in the /encore_android/app/src/test/java/cs130project/encore folder. The tests cover updating a lobby with new information, creating a lobby, logging in, and entering a lobby.
